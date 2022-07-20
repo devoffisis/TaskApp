@@ -14,7 +14,7 @@ const val EXTRA_TASK = "jp.techacademy.yoshitsugu.sekine.taskapp.TASK"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mRealm: Realm
-    private val mRealmListener = object: RealmChangeListener<Realm>{
+    private val mRealmListener = object : RealmChangeListener<Realm> {
         override fun onChange(element: Realm) {
             reloadListView()
         }
@@ -25,11 +25,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val listView1 = findViewById<ListView>(R.id.listView1)
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val listView1: ListView = findViewById(R.id.listView1)
 
         binding.fab.setOnClickListener { view ->
             val intent = Intent(this, InputActivity::class.java)
@@ -43,8 +44,7 @@ class MainActivity : AppCompatActivity() {
         // ListViewの設定
         mTaskAdapter = TaskAdapter(this)
 
-        /*
-        listView1.setOnItemClickListener {parent, view, position, id ->
+        listView1.setOnItemClickListener { parent, view, position, id ->
             // 入力・編集する画面に遷移させる
             val task = parent.adapter.getItem(position) as Task
             val intent = Intent(this, InputActivity::class.java)
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        listView1.setOnItemLongClickListener{parent, view, position, id ->
+        listView1.setOnItemLongClickListener { parent, view, position, id ->
             // タスクを削除する
             val task = parent.adapter.getItem(position) as Task
 
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             builder.setTitle("削除")
             builder.setMessage(task.title + "を削除しますか")
 
-            builder.setPositiveButton("OK"){_, _ ->
+            builder.setPositiveButton("OK") { _, _ ->
                 val results = mRealm.where(Task::class.java).equalTo("id", task.id).findAll()
 
                 mRealm.beginTransaction()
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
             true
         }
-         */
+
         reloadListView()
     }
 
@@ -87,7 +87,8 @@ class MainActivity : AppCompatActivity() {
         val listView1 = findViewById<ListView>(R.id.listView1)
 
         // Realmデータベースから、「すべてのデータを取得して新しい日時順に並べた結果」を取得
-        val taskRealmResults = mRealm.where(Task::class.java).findAll().sort("date", Sort.DESCENDING)
+        val taskRealmResults =
+            mRealm.where(Task::class.java).findAll().sort("date", Sort.DESCENDING)
 
         // 上記の結果を、TaskListとしてセットする
         mTaskAdapter.mTaskList = mRealm.copyFromRealm(taskRealmResults)

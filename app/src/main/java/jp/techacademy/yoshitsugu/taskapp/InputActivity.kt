@@ -12,12 +12,6 @@ import io.realm.Realm
 import java.util.*
 
 class InputActivity : AppCompatActivity() {
-    var date_button = findViewById<Button>(R.id.date_button)
-    var times_button = findViewById<Button>(R.id.times_button)
-    var done_button = findViewById<Button>(R.id.done_button)
-    var title_edit_text = findViewById<EditText>(R.id.title_edit_text)
-    var content_edit_text = findViewById<EditText>(R.id.content_edit_text)
-
     private var mYear = 0
     private var mMonth = 0
     private var mDay = 0
@@ -26,6 +20,9 @@ class InputActivity : AppCompatActivity() {
     private var mTask: Task? = null
 
     private val mOnDateClickListener = View.OnClickListener {
+        setContentView(R.layout.activity_input)
+        val date_button = findViewById<Button>(R.id.date_button)
+
         val datePickerDialog = DatePickerDialog(this,
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 mYear = year
@@ -38,6 +35,9 @@ class InputActivity : AppCompatActivity() {
     }
 
     private val mOnTimeClickListener = View.OnClickListener {
+        setContentView(R.layout.activity_input)
+        val times_button = findViewById<Button>(R.id.times_button)
+
         val timePickerDialog = TimePickerDialog(this,
             TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                 mHour = hour
@@ -56,6 +56,12 @@ class InputActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input)
+
+        val date_button = findViewById<Button>(R.id.date_button)
+        val done_button = findViewById<Button>(R.id.done_button)
+        val times_button = findViewById<Button>(R.id.times_button)
+        val title_edit_text = findViewById<EditText>(R.id.title_edit_text)
+        val content_edit_text = findViewById<EditText>(R.id.content_edit_text)
 
         // ActionBarを設定する
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
@@ -106,6 +112,11 @@ class InputActivity : AppCompatActivity() {
     }
 
     private fun addTask() {
+        setContentView(R.layout.activity_input)
+
+        val title_edit_text = findViewById<EditText>(R.id.title_edit_text)
+        val content_edit_text = findViewById<EditText>(R.id.content_edit_text)
+
         val realm = Realm.getDefaultInstance()
 
         realm.beginTransaction()
