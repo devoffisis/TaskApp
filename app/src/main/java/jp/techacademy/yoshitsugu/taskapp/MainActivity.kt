@@ -9,16 +9,26 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.google.android.material.snackbar.Snackbar
+import io.realm.Realm
+import io.realm.RealmChangeListener
+import io.realm.Sort
 import jp.techacademy.yoshitsugu.taskapp.databinding.ActivityMainBinding
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var mRealm: Realm
+    private val mRealmListener = object: RealmChangeListener<Realm>{
+        override fun onChange(element: Realm) {
+            reloadListView()
+        }
+    }
+
     private lateinit var mTaskAdapter: TaskAdapter
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val listView1 = findViewById<ListView>(R.id.listView1)
+        // val listView1 = findViewById<ListView>(R.id.listView1)
 
         super.onCreate(savedInstanceState)
 
@@ -30,7 +40,13 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
+        // Realmの設定
+        mRealm = Realm.getDefaultInstance()
+        mRealm.addChangeListener(mRealmListener)
+
+        // ListViewの設定
         mTaskAdapter = TaskAdapter(this)
+
 
         /*
         listView1.setOnItemClickListener {parent, view, position, id ->
@@ -42,17 +58,39 @@ class MainActivity : AppCompatActivity() {
         }
          */
 
+        addTaskForTest()
+
         reloadListView()
     }
 
     private fun reloadListView() {
         val listView1 = findViewById<ListView>(R.id.listView1)
 
-        val taskList = mutableListOf<String>("aaa","bbb","ccc")
+        // Realmデータベースから、「すべてのデータを取得して新しい日時順に並べた結果」を取得
+        val taskRealmResults = mRealm.where(Task::class.java).findAll().sort("date", Sort.DESCENDING)
 
-        mTaskAdapter.mTaskList = taskList
+        // 上記の結果を、TaskListとしてセットする
+        mTaskAdapter.mTaskList = mRealm.copyFromRealm(taskRealmResults)
+
         listView1.adapter = mTaskAdapter
         mTaskAdapter.notifyDataSetChanged()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mRealm.close()
+    }
+
+    private fun addTaskForTest() {
+        val task = Task()
+        task.title = "作業"
+        task.contents = "プログラムを書いてPUSHする"
+        task.date = Date()
+        task.id = 0
+        mRealm.beginTransaction()
+        mRealm.copyToRealmOrUpdate(task)
+        mRealm.commitTransaction()
     }
 
     /*
