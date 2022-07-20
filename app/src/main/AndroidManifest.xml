@@ -15,6 +15,16 @@
         android:theme="@style/Theme.TaskApp"
         tools:targetApi="31">
         <activity
+            android:name=".InputActivity"
+            android:label="タスク"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TaskApp.NoActionBar"
+            android:exported="false" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="jp.techacademy.yoshitsugu.taskapp.MainActivity"/>
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.TaskApp">
