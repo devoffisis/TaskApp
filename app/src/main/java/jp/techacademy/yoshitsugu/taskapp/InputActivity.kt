@@ -1,7 +1,10 @@
 package jp.techacademy.yoshitsugu.taskapp
 
+import android.app.AlarmManager
 import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
@@ -113,7 +116,6 @@ class InputActivity : AppCompatActivity() {
 
     private fun addTask() {
         setContentView(R.layout.activity_input)
-
         val title_edit_text = findViewById<EditText>(R.id.title_edit_text)
         val content_edit_text = findViewById<EditText>(R.id.content_edit_text)
 
@@ -149,5 +151,17 @@ class InputActivity : AppCompatActivity() {
         realm.commitTransaction()
 
         realm.close()
+
+        val resultIntent = Intent(applicationContext, TaskAlarmReceiver::class.java)
+        resultIntent.putExtra(EXTRA_TASK, mTask!!.id)
+        val resultPendingIntent = PendingIntent.getBroadcast(
+            this,
+            mTask!!.id,
+            resultIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, resultPendingIntent)
     }
 }
