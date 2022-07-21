@@ -37,7 +37,7 @@ class TaskAdapter(context: Context): BaseAdapter() {
 
         textView1.text = mTaskList[position].title
 
-        val simpleDateFormat = SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.JAPANESE)
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.JAPANESE)
         val date = mTaskList[position].date
         textView2.text = simpleDateFormat.format(date)
 
