@@ -1,21 +1,19 @@
 package jp.techacademy.yoshitsugu.taskapp
 
 import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.app.PendingIntent
 import android.graphics.BitmapFactory
+import android.app.NotificationManager
+import android.app.NotificationChannel
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import io.realm.Realm
 
 class TaskAlarmReceiver : BroadcastReceiver() {
-
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(context: Context?, intent: Intent?) {
         val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // SDKバージョンが26以上の場合、チャネルを設定する必要がある
@@ -52,7 +50,7 @@ class TaskAlarmReceiver : BroadcastReceiver() {
         builder.setContentIntent(pendingIntent)
 
         // 通知を表示する
-        notificationManager.notify(task!!.id, builder.build())
+        notificationManager.notify(task.id, builder.build())
         realm.close()
     }
 }

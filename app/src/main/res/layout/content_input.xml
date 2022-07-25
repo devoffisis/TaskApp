@@ -18,35 +18,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="タイトル" />
+
     <EditText
         android:id="@+id/content_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_edit_text"
         android:hint="内容" />
+
+    <EditText
+        android:id="@+id/category_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content_edit_text"
+        android:hint="カテゴリー" />
+
     <Button
         android:id="@+id/date_button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/content_edit_text"
+        android:layout_below="@id/category_edit_text"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="83dp"
+        android:layout_marginRight="27dp"
         android:layout_toLeftOf="@+id/times_button"
-        android:text="----/--/--"
-        style="@style/Widget.AppCompat.Button.Colored" />
+        android:text="----/--/--" />
+
     <Button
         android:id="@id/times_button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/content_edit_text"
+        android:layout_below="@id/category_edit_text"
         android:layout_alignParentRight="true"
-        android:text="--:--"
-        style="@style/Widget.AppCompat.Button.Colored" />
+        android:layout_marginTop="83dp"
+        android:layout_marginRight="18dp"
+        android:text="--:--" />
+
     <Button
         android:id="@+id/done_button"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/times_button"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="18dp"
         android:text="決定" />
 
 </RelativeLayout>
