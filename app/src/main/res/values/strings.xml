@@ -15,4 +15,6 @@
     <string name="date">----/--/--</string>
     <string name="time">--:--</string>
     <string name="register">決定</string>
+    <string name="mainCategory">フィルター</string>
+    <string name="todo_list">TODO List</string>
 </resources>
