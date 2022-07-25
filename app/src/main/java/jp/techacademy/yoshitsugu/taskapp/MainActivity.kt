@@ -4,7 +4,10 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
@@ -25,6 +28,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mTaskAdapter: TaskAdapter
 
     private lateinit var binding: ActivityMainBinding
+
+    fun actFilter(view: View){
+        val listView1 = findViewById<ListView>(R.id.listView1)
+        val categoryFilterText = findViewById<EditText>(R.id.category_filter_text).text.toString()
+        // Realmデータベースから、「すべてのデータを取得して新しい日時順に並べた結果」を取得
+        val taskRealmResults =
+            if (categoryFilterText == "") mRealm.where(Task::class.java).findAll().sort("date", Sort.DESCENDING)
+            else mRealm.where(Task::class.java).equalTo("category", categoryFilterText).findAll().sort("date", Sort.DESCENDING)
+
+
+        // 上記の結果を、TaskListとしてセットする
+        mTaskAdapter.mTaskList = mRealm.copyFromRealm(taskRealmResults)
+        listView1.adapter = mTaskAdapter
+        mTaskAdapter.notifyDataSetChanged()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
