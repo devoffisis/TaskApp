@@ -17,21 +17,27 @@
         android:id="@+id/title_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="タイトル" />
+        android:hint="@string/title"
+        android:autofillHints=""
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/content_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_edit_text"
-        android:hint="内容" />
+        android:hint="@string/content"
+        android:autofillHints=""
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/category_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/content_edit_text"
-        android:hint="カテゴリー" />
+        android:hint="@string/category"
+        android:autofillHints=""
+        android:inputType="text" />
 
     <Button
         android:id="@+id/date_button"
@@ -42,9 +48,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="83dp"
-        android:layout_marginRight="27dp"
-        android:layout_toLeftOf="@+id/times_button"
-        android:text="----/--/--" />
+        android:layout_marginEnd="27dp"
+        android:layout_toStartOf="@+id/times_button"
+        android:text="@string/date" />
 
     <Button
         android:id="@id/times_button"
@@ -52,19 +58,19 @@
         android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/category_edit_text"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="83dp"
-        android:layout_marginRight="18dp"
-        android:text="--:--" />
+        android:layout_marginEnd="18dp"
+        android:text="@string/time" />
 
     <Button
         android:id="@+id/done_button"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/times_button"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="2dp"
-        android:layout_marginRight="18dp"
-        android:text="決定" />
+        android:layout_marginEnd="18dp"
+        android:text="@string/register" />
 
 </RelativeLayout>
